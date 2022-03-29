@@ -15,8 +15,54 @@ public class JResortCalculator extends JFrame implements ItemListener {
 
     JLabel ressortLabel = new JLabel("Resort Price Generator");
     JLabel priceLabel = new JLabel("The price for your stay is");
-    //here
+    JTextField totPrice = new JTextField(4);
+    JLabel optionalExplainLabel = new JLabel("Base price for a room is $" + BASE_PRICE + ".");
+    JLabel optionalExplainLabel2 = new JLabel("Check the options you want.");
 
+    public JResortCalculator() {
+        super("Resort Price Calculator");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+        add(ressortLabel);
+        add(optionalExplainLabel);
+        add(optionalExplainLabel2);
+        add(weekendBox);
+        add(breakfastBox);
+        add(golfBox);
+        add(priceLabel);
+        add(totPrice);
+        totPrice.setText("$" + totalPrice);
+        weekendBox.addItemListener(this);
+        breakfastBox.addItemListener(this);
+        golfBox.addItemListener(this);
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent event) {
+        Object source = event.getSource();
+        int select
+         = event.getStateChange();
+        if (source == weekendBox) {
+            if (select == ItemEvent.SELECTED) {
+                totalPrice += WEEKEND_PREMIUM;
+            } else {
+                totalPrice -= WEEKEND_PREMIUM;
+            }
+        } else if (source == breakfastBox) {
+            if (select == ItemEvent.SELECTED) {
+                totalPrice += BREAKFAST_PREMIUM;
+            } else {
+                totalPrice -= BREAKFAST_PREMIUM;
+            }
+        } else if (source == golfBox) {
+            if (select == ItemEvent.SELECTED) {
+                totalPrice += GOLF_PREMIUM;
+            } else {
+                totalPrice -= GOLF_PREMIUM;
+            }
+        }
+        totPrice.setText("$" + totalPrice);
+    }
 
 
 
